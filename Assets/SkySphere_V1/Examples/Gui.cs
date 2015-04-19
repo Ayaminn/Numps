@@ -58,7 +58,7 @@ public class Gui : MonoBehaviour {
 	
 	void ApplyMaterial(){
 		for (int g=0;g<models.Length;g++){
-			models[g].renderer.material = mats[currentSky];	
+			models[g].GetComponent<Renderer>().material = mats[currentSky];	
 		}
 	}
 }

@@ -11,8 +11,8 @@ using System.Collections;
 [RequireComponent(typeof (CapsuleCollider))]
 [RequireComponent(typeof (Rigidbody))]
 
-public class myAliciaScript : MonoBehaviour
-{
+public class myAliciaScript : MonoBehaviour{
+
 	float walkingDistance =  0; //動いた長さ
 	Vector3 prevPos; //1フレーム前の位置
 
@@ -30,7 +30,7 @@ public class myAliciaScript : MonoBehaviour
 	// 旋回速度
 	public float rotateSpeed = 2.0f;
 	// ジャンプ威力
-	public float jumpPower = 3.0f; 
+	public float jumpPower = 3.0f;
 	// キャラクターコントローラ（カプセルコライダ）の参照
 	private CapsuleCollider col;
 	private Rigidbody rb;
@@ -39,21 +39,25 @@ public class myAliciaScript : MonoBehaviour
 	// CapsuleColliderで設定されているコライダのHeiht、Centerの初期値を収める変数
 	private float orgColHight;
 	private Vector3 orgVectColCenter;
-	
+
 	private Animator anim;							// キャラにアタッチされるアニメーターへの参照
 	private AnimatorStateInfo currentBaseState;			// base layerで使われる、アニメーターの現在の状態の参照
 
 	private GameObject cameraObject;	// メインカメラへの参照
-		
+
+	public float a = 1;
+
+	private int hosuu;
+	private int ushirohosuu; 
+
 // アニメーター各ステートへの参照
-	static int idleState = Animator.StringToHash("Base Layer.Idle");
+	static int idleState = Animator.StringToHash("Base Layer.Idle"); //"
 	static int locoState = Animator.StringToHash("Base Layer.Locomotion");
-	static int jumpState = Animator.StringToHash("Base Layer.Jump");
+	static int jumpState = Animator.StringToHash("Base Layer.Jump"); //"
 	static int restState = Animator.StringToHash("Base Layer.Rest");
 
-// 初期化
-	void Start ()
-	{
+// 初期化"
+	void Start (){
 		prevPos = transform.position;
 
 		// Animatorコンポーネントを取得する
@@ -66,35 +70,53 @@ public class myAliciaScript : MonoBehaviour
 		// CapsuleColliderコンポーネントのHeight、Centerの初期値を保存する
 		orgColHight = col.height;
 		orgVectColCenter = col.center;
-}
-	
-	void Update (){
-		walkingDistance += Vector3.Distance(transform.position ,prevPos);
-		prevPos = transform.position;
-		Debug.Log(walkingDistance);
 	}
-	
+
+	void Update (){
+		/*if (Input.GetKey("up")) {
+			walkingDistance += Vector3.Distance
+		}*/
+
+		walkingDistance += Vector3.Distance(transform.position ,prevPos); 	//歩数 に加算する 1フレームごとの距離(現在地 ,前の位置);
+		prevPos = transform.position;
+		//Debug.Log(walkingDistance);
+		//int hosuu;
+
+		if(Input.GetKey("down")){
+			ushirohosuu = Mathf.FloorToInt(walkingDistance / 0.31231266068627f);
+			Debug.Log(ushirohosuu.ToString() + "-歩");
+		}else{
+			hosuu = Mathf.FloorToInt(walkingDistance / 1.225f);
+			Debug.Log(hosuu.ToString() + "歩");
+		}
+
+		//hosuu = Mathf.FloorToInt(walkingDistance / 1.225f);
+		//Debug.Log(hosuu);
+		//Debug.Log(walkingDistance / 1.225064 - 1.352419) ;
+
+		//Debug.Log(hosuu.ToString() + "歩");
+	}
+
 // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
-	void FixedUpdate ()
-	{
+	void FixedUpdate (){
 
 		float v = 0.0f;
 
-		if(Input.GetKey("w")){
+		if(Input.GetKey("up")){
 			v = 1.0f;
 		}
 
-		if(Input.GetKey("s")){
+		if(Input.GetKey("down")){
 			v = -1.0f;
 		}
 
 		float h = 0.0f;
 
-		if(Input.GetKey("d")) {
+		if(Input.GetKey("right")) {
 			h = 1.0f;
 		}
 
-		if(Input.GetKey("a")){
+		if(Input.GetKey("left")){
 			h = -1.0f;
 		}
 
@@ -103,9 +125,9 @@ public class myAliciaScript : MonoBehaviour
 		anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
 		currentBaseState = anim.GetCurrentAnimatorStateInfo(0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
 		rb.useGravity = true;//ジャンプ中に重力を切るので、それ以外は重力の影響を受けるようにする
-		
-		
-		
+
+
+
 		// 以下、キャラクターの移動処理
 		velocity = new Vector3(0, 0, v);		// 上下のキー入力からZ軸方向の移動量を取得
 		// キャラクターのローカル空間での方向に変換
@@ -116,7 +138,7 @@ public class myAliciaScript : MonoBehaviour
 		} else if (v < -0.1) {
 			velocity *= backwardSpeed;	// 移動速度を掛ける
 		}
-		
+
 		if (Input.GetKeyDown("p")) {	// スペースキーを入力したら
 
 			//アニメーションのステートがLocomotionの最中のみジャンプできる
@@ -129,14 +151,14 @@ public class myAliciaScript : MonoBehaviour
 				}
 			}
 		}
-		
+
 
 		// 上下のキー入力でキャラクターを移動させる
 		transform.localPosition += velocity * Time.fixedDeltaTime;
 
 		// 左右のキー入力でキャラクタをY軸で旋回させる
-		transform.Rotate(0, h * rotateSpeed, 0);	
-	
+		transform.Rotate(0, h * rotateSpeed, 0);
+
 
 		// 以下、Animatorの各ステート中での処理
 		// Locomotion中
@@ -149,53 +171,52 @@ public class myAliciaScript : MonoBehaviour
 		}
 		// JUMP中の処理
 		// 現在のベースレイヤーがjumpStateの時
-		else if(currentBaseState.nameHash == jumpState)
-		{
+		else if(currentBaseState.nameHash == jumpState){
 			//cameraObject.SendMessage("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
 			// ステートがトランジション中でない場合
-			if(!anim.IsInTransition(0))
-			{
-				
+			if(!anim.IsInTransition(0)){
+
 				// 以下、カーブ調整をする場合の処理
 				if(useCurves){
 					// 以下JUMP00アニメーションについているカーブJumpHeightとGravityControl
 					// JumpHeight:JUMP00でのジャンプの高さ（0〜1）
 					// GravityControl:1⇒ジャンプ中（重力無効）、0⇒重力有効
 					float jumpHeight = anim.GetFloat("JumpHeight");
-					float gravityControl = anim.GetFloat("GravityControl"); 
+					float gravityControl = anim.GetFloat("GravityControl");
 					if(gravityControl > 0)
 						rb.useGravity = false;	//ジャンプ中の重力の影響を切る
-										
+
 					// レイキャストをキャラクターのセンターから落とす
 					Ray ray = new Ray(transform.position + Vector3.up, -Vector3.up);
 					RaycastHit hitInfo = new RaycastHit();
 					// 高さが useCurvesHeight 以上ある時のみ、コライダーの高さと中心をJUMP00アニメーションについているカーブで調整する
-					if (Physics.Raycast(ray, out hitInfo))
-					{
-						if (hitInfo.distance > useCurvesHeight)
-						{
+					if (Physics.Raycast(ray, out hitInfo)){
+
+						if (hitInfo.distance > useCurvesHeight){
 							col.height = orgColHight - jumpHeight;			// 調整されたコライダーの高さ
 							float adjCenterY = orgVectColCenter.y + jumpHeight;
 							col.center = new Vector3(0, adjCenterY, 0);	// 調整されたコライダーのセンター
 						}
+
 						else{
-							// 閾値よりも低い時には初期値に戻す（念のため）					
+							// 閾値よりも低い時には初期値に戻す（念のため）
 							resetCollider();
 						}
 					}
 				}
-				// Jump bool値をリセットする（ループしないようにする）				
+				// Jump bool値をリセットする（ループしないようにする）
 				anim.SetBool("Jump", false);
 			}
 		}
 		// IDLE中の処理
 		// 現在のベースレイヤーがidleStateの時
-		else if (currentBaseState.nameHash == idleState)
-		{
+		else if (currentBaseState.nameHash == idleState){
+
 			//カーブでコライダ調整をしている時は、念のためにリセットする
 			if(useCurves){
 				resetCollider();
 			}
+
 			// スペースキーを入力したらRest状態になる
 			if (Input.GetButtonDown("Jump")) {
 				anim.SetBool("Rest", true);
@@ -203,12 +224,11 @@ public class myAliciaScript : MonoBehaviour
 		}
 		// REST中の処理
 		// 現在のベースレイヤーがrestStateの時
-		else if (currentBaseState.nameHash == restState)
-		{
+		else if (currentBaseState.nameHash == restState){
+
 			//cameraObject.SendMessage("setCameraPositionFrontView");		// カメラを正面に切り替える
 			// ステートが遷移中でない場合、Rest bool値をリセットする（ループしないようにする）
-			if(!anim.IsInTransition(0))
-			{
+			if(!anim.IsInTransition(0)){
 				anim.SetBool("Rest", false);
 			}
 		}
@@ -227,8 +247,7 @@ public class myAliciaScript : MonoBehaviour
 
 
 	// キャラクターのコライダーサイズのリセット関数
-	void resetCollider()
-	{
+	void resetCollider(){
 	// コンポーネントのHeight、Centerの初期値を戻す
 		col.height = orgColHight;
 		col.center = orgVectColCenter;
