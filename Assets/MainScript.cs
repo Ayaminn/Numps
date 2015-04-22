@@ -11,7 +11,7 @@ using System.Collections;
 [RequireComponent(typeof (CapsuleCollider))]
 [RequireComponent(typeof (Rigidbody))]
 
-public class myAliciaScript : MonoBehaviour{
+public class MainScript : MonoBehaviour{
 
 	float walkingDistance =  0; //動いた長さ
 	Vector3 prevPos; //1フレーム前の位置
@@ -48,7 +48,12 @@ public class myAliciaScript : MonoBehaviour{
 	public float a = 1;
 
 	private int hosuu;
-	private int ushirohosuu; 
+	private int ushirohosuu;
+
+	private bool aliciaMoving = true; //trueのときはAliciaちゃん
+
+	public Camera mainCamera;//メインカメラ
+    public Camera sabuCamera;//サブのカメラです
 
 // アニメーター各ステートへの参照
 	static int idleState = Animator.StringToHash("Base Layer.Idle"); //"
@@ -70,12 +75,25 @@ public class myAliciaScript : MonoBehaviour{
 		// CapsuleColliderコンポーネントのHeight、Centerの初期値を保存する
 		orgColHight = col.height;
 		orgVectColCenter = col.center;
+
+		mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+		sabuCamera = GameObject.Find ("sabuCamera").GetComponent<Camera> ();
 	}
 
 	void Update (){
 		/*if (Input.GetKey("up")) {
 			walkingDistance += Vector3.Distance
 		}*/
+
+		if(Input.GetKeyDown("z")){
+			aliciaMoving = false;
+		}
+
+		if(Input.GetKeyDown("a")){
+			aliciaMoving = true;
+		}
+
+		Debug.Log(aliciaMoving);
 
 		walkingDistance += Vector3.Distance(transform.position ,prevPos); 	//歩数 に加算する 1フレームごとの距離(現在地 ,前の位置);
 		prevPos = transform.position;
@@ -101,23 +119,54 @@ public class myAliciaScript : MonoBehaviour{
 	void FixedUpdate (){
 
 		float v = 0.0f;
-
-		if(Input.GetKey("up")){
-			v = 1.0f;
-		}
-
-		if(Input.GetKey("down")){
-			v = -1.0f;
-		}
-
 		float h = 0.0f;
 
-		if(Input.GetKey("right")) {
-			h = 1.0f;
+		if(aliciaMoving == true && gameObject.name == "Alicia_solid"){
+
+        mainCamera.enabled = true;
+        sabuCamera.enabled = false;
+ 
+			//Debug.Log("きた");
+
+			if(Input.GetKey("up")){
+				v = 1.0f;
+			}
+
+			if(Input.GetKey("down")){
+				v = -1.0f;
+			}
+
+			if(Input.GetKey("right")) {
+				h = 1.0f;
+			}
+
+			if(Input.GetKey("left")){
+				h = -1.0f;
+			}
 		}
 
-		if(Input.GetKey("left")){
-			h = -1.0f;
+		if(aliciaMoving == false && gameObject.name == "unitychan"){
+
+			mainCamera.enabled = false;
+			sabuCamera.enabled = true;
+
+			//Debug.Log("きた2");
+
+			if(Input.GetKey("up")){
+				v = 1.0f;
+			}
+
+			if(Input.GetKey("down")){
+				v = -1.0f;
+			}
+
+			if(Input.GetKey("right")) {
+				h = 1.0f;
+			}
+
+			if(Input.GetKey("left")){
+				h = -1.0f;
+			}
 		}
 
 		anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
