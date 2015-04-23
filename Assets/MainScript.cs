@@ -208,7 +208,6 @@ public class MainScript : MonoBehaviour{
 		// 左右のキー入力でキャラクタをY軸で旋回させる
 		transform.Rotate(0, h * rotateSpeed, 0);
 
-
 		// 以下、Animatorの各ステート中での処理
 		// Locomotion中
 		// 現在のベースレイヤーがlocoStateの時
@@ -245,9 +244,7 @@ public class MainScript : MonoBehaviour{
 							col.height = orgColHight - jumpHeight;			// 調整されたコライダーの高さ
 							float adjCenterY = orgVectColCenter.y + jumpHeight;
 							col.center = new Vector3(0, adjCenterY, 0);	// 調整されたコライダーのセンター
-						}
-
-						else{
+						}else{
 							// 閾値よりも低い時には初期値に戻す（念のため）
 							resetCollider();
 						}
