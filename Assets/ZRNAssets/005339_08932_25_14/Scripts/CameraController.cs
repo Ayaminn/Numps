@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -90,4 +90,4 @@ public class CameraController : MonoBehaviour {
 			cameraObject.transform.localEulerAngles = new Vector3(0, 0, 0);
 		}
 	}
-}
+}*/
