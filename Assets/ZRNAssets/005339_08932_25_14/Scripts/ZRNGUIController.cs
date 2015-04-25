@@ -11,6 +11,8 @@ public class ZRNGUIController : MonoBehaviour {
 	private const string ZENRIN_URL = "http://www.zenrin.co.jp/";
 	private const string PQ_URL = "http://www.pocket-queries.co.jp/";
 
+	private int ChangeCamera = GameObject.Find("CameraController").GetComponent<ChangeCamera>();
+
 	[SerializeField]
 	GameObject[] QueryObjects;
 
