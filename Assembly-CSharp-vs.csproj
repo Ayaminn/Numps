@@ -58,13 +58,8 @@
      <Compile Include="Assets\UnityChan\Scripts\ThirdPersonCamera.cs" />
      <Compile Include="Assets\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
      <Compile Include="Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
-     <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\AmbientController.cs" />
-     <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\CameraController.cs" />
-     <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\FlyThroughController.cs" />
-     <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\MoveCamera.cs" />
      <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\Util\SetFPS.cs" />
      <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\Util\ViewFPS.cs" />
-     <Compile Include="Assets\ZRNAssets\005339_08932_25_14\Scripts\ZRNGUIController.cs" />
      <Compile Include="Assets\ZRNAssets\Cars\Scripts\AICarMove.cs" />
      <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan\Scripts\CameraAction.cs" />
      <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan\Scripts\GUIController.cs" />
