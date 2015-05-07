@@ -149,9 +149,6 @@ public class MainScript : MonoBehaviour{
 
 	//void UnityChan(){
 
-		float v = 0.0f;
-		float h = 0.0f;
-
 		if(aliciaMoving == false && gameObject.name == "unitychan"){
 
 			mainCamera.enabled = false;
@@ -179,8 +176,8 @@ public class MainScript : MonoBehaviour{
 
 	//void FixedUpdate (){
 
-		float v = 0.0f;
-		float h = 0.0f;
+		/*float v = 0.0f;
+		float h = 0.0f;*/
 
 		anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
 		anim.SetFloat("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
