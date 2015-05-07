@@ -117,6 +117,7 @@ public class MainScript : MonoBehaviour{
 
 // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
 	void FixedUpdate (){
+	//void Alicia(){
 
 		float v = 0.0f;
 		float h = 0.0f;
@@ -144,6 +145,12 @@ public class MainScript : MonoBehaviour{
 				h = -1.0f;
 			}
 		}
+	//}
+
+	//void UnityChan(){
+
+		float v = 0.0f;
+		float h = 0.0f;
 
 		if(aliciaMoving == false && gameObject.name == "unitychan"){
 
@@ -168,6 +175,12 @@ public class MainScript : MonoBehaviour{
 				h = -1.0f;
 			}
 		}
+	//}
+
+	//void FixedUpdate (){
+
+		float v = 0.0f;
+		float h = 0.0f;
 
 		anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
 		anim.SetFloat("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
