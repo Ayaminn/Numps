@@ -116,7 +116,7 @@ public class MainScript : MonoBehaviour{
 	}
 
 // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
-	void FixedUpdate (){
+	public void FixedUpdate (){
 	//void Alicia(){
 
 		float v = 0.0f;
